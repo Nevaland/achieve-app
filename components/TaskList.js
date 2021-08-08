@@ -23,11 +23,11 @@ class TaskList extends Component {
                   <Text style={styles.taskItemPlaytime}>{data.playtime}</Text>
                   <Text
                     style={{
-                      ...styles.taskItemGoaltime,
+                      ...styles.taskItemRemaintime,
                       color: data.completed ? "#52BB63" : "#C1463E",
                     }}
                   >
-                    {data.goaltime}
+                    {data.remaintime}
                   </Text>
                 </View>
               </View>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   taskItemPlaytime: {
     paddingRight: 10,
   },
-  taskItemGoaltime: {
+  taskItemRemaintime: {
     paddingRight: 10,
   },
 

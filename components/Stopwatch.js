@@ -33,9 +33,9 @@ const Stopwatch = ({ stopwatch_state, handleStop, time, setTime }) => {
           if (seconds < 10) {
             seconds = "0" + seconds;
           }
-          let testTime = hours + ":" + minutes + ":" + seconds;
-          testTime = testTime.substr(0, 8);
-          return testTime;
+          let time = hours + ":" + minutes + ":" + seconds;
+          time = time.substr(0, 8);
+          return time;
           z;
         });
       }, 100);
@@ -66,7 +66,12 @@ const Stopwatch = ({ stopwatch_state, handleStop, time, setTime }) => {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleStop}>
+          <TouchableOpacity
+            onPress={() => {
+              handleStop(title, time);
+              setTime("00:00:00");
+            }}
+          >
             <View style={styles.pauseBtn}>
               <MaterialCommunityIcons
                 style={styles.btnIcon}
