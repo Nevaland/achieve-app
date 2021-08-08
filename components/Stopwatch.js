@@ -2,21 +2,19 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const Stopwatch = ({ stopwatch_state, handleStop }) => {
-  const { title, stopwatch_color, playtime } = stopwatch_state;
+const Stopwatch = ({ stopwatch_state, handleStop, time, setTime }) => {
+  const { title, stopwatch_color } = stopwatch_state;
   const [isRunning, setIsRunning] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(playtime);
 
   const handlePlay = () => {
     setIsRunning(!isRunning);
-    console.log(elapsedTime);
   };
 
   useEffect(() => {
     let interval;
     if (isRunning) {
       interval = setInterval(() => {
-        setElapsedTime((prevTime) => {
+        setTime((prevTime) => {
           const secTime =
             Number(prevTime.substr(0, 2)) * 3600 +
             Number(prevTime.substr(3, 2)) * 60 +
@@ -55,7 +53,7 @@ const Stopwatch = ({ stopwatch_state, handleStop }) => {
             backgroundColor: stopwatch_color,
           }}
         >
-          <Text style={styles.clockText}>{elapsedTime}</Text>
+          <Text style={styles.clockText}>{time}</Text>
         </View>
 
         <View>
