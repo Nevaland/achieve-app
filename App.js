@@ -6,7 +6,7 @@ import TaskList from "./components/TaskList";
 import Menus from "./components/Menus";
 import TaskSetting from "./components/TaskSetting";
 
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const App = () => {
   const [state, setState] = useState({
