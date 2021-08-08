@@ -1,42 +1,41 @@
-import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import React from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-class Menus extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.menuItem}>
-          <MaterialCommunityIcons
-            style={styles.btnIcon}
-            size={48}
-            name="calendar"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
-          <MaterialCommunityIcons
-            style={styles.btnIcon}
-            size={48}
-            name="home"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
-          <MaterialCommunityIcons
-            style={styles.btnIcon}
-            size={48}
-            name="tune"
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+const Menus = ({ setPage }) => {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => {
+          setPage(0);
+        }}
+      >
+        <MaterialCommunityIcons
+          style={styles.btnIcon}
+          size={48}
+          name="calendar"
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => {
+          setPage(1);
+        }}
+      >
+        <MaterialCommunityIcons style={styles.btnIcon} size={48} name="home" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => {
+          setPage(2);
+        }}
+      >
+        <MaterialCommunityIcons style={styles.btnIcon} size={48} name="tune" />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

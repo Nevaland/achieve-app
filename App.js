@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import Stopwatch from "./components/Stopwatch";
 import TaskList from "./components/TaskList";
 import Menus from "./components/Menus";
+import TaskSetting from "./components/TaskSetting";
 
 const App = () => {
   const [state, setState] = useState({
@@ -13,65 +14,66 @@ const App = () => {
     },
 
     today_achieved: "1/6",
-    tasks: [
-      {
-        name: "Project",
-        completed: false,
-        playtime: "00:00:00",
-        remaintime: "01:00:00",
-        goaltime: "01:00:00",
-        taskcolor: "#AEC5FF",
-        achievePer: "0%",
-      },
-      {
-        name: "CS",
-        completed: true,
-        playtime: "01:39:54",
-        remaintime: "00:00:00",
-        goaltime: "00:00:00",
-        taskcolor: "#AAE3F5",
-        achievePer: "100%",
-      },
-      {
-        name: "New Tech",
-        completed: false,
-        playtime: "00:00:00",
-        remaintime: "00:20:00",
-        goaltime: "00:20:00",
-        taskcolor: "#FFF069",
-        achievePer: "0%",
-      },
-      {
-        name: "Blog",
-        completed: false,
-        playtime: "00:00:00",
-        remaintime: "00:20:00",
-        goaltime: "00:20:00",
-        taskcolor: "#D2AEFF",
-        achievePer: "0%",
-      },
-      {
-        name: "Portfolio",
-        completed: false,
-        playtime: "00:00:00",
-        remaintime: "00:20:00",
-        goaltime: "00:20:00",
-        taskcolor: "#FFAEAE",
-        achievePer: "0%",
-      },
-      {
-        name: "Translate",
-        completed: false,
-        playtime: "00:00:00",
-        remaintime: "00:00:20",
-        goaltime: "00:00:20",
-        taskcolor: "#AEFFB6",
-        achievePer: "0%",
-      },
-    ],
+    // tasks: [
+    //   {
+    //     name: "Project",
+    //     completed: false,
+    //     playtime: "00:00:00",
+    //     remaintime: "01:00:00",
+    //     goaltime: "01:00:00",
+    //     taskcolor: "#AEC5FF",
+    //     achievePer: "0%",
+    //   },
+    //   {
+    //     name: "CS",
+    //     completed: true,
+    //     playtime: "01:39:54",
+    //     remaintime: "00:00:00",
+    //     goaltime: "00:00:00",
+    //     taskcolor: "#AAE3F5",
+    //     achievePer: "100%",
+    //   },
+    //   {
+    //     name: "New Tech",
+    //     completed: false,
+    //     playtime: "00:00:00",
+    //     remaintime: "00:20:00",
+    //     goaltime: "00:20:00",
+    //     taskcolor: "#FFF069",
+    //     achievePer: "0%",
+    //   },
+    //   {
+    //     name: "Blog",
+    //     completed: false,
+    //     playtime: "00:00:00",
+    //     remaintime: "00:20:00",
+    //     goaltime: "00:20:00",
+    //     taskcolor: "#D2AEFF",
+    //     achievePer: "0%",
+    //   },
+    //   {
+    //     name: "Portfolio",
+    //     completed: false,
+    //     playtime: "00:00:00",
+    //     remaintime: "00:20:00",
+    //     goaltime: "00:20:00",
+    //     taskcolor: "#FFAEAE",
+    //     achievePer: "0%",
+    //   },
+    //   {
+    //     name: "Translate",
+    //     completed: false,
+    //     playtime: "00:00:00",
+    //     remaintime: "00:00:20",
+    //     goaltime: "00:00:20",
+    //     taskcolor: "#AEFFB6",
+    //     achievePer: "0%",
+    //   },
+    // ],
   });
-
   const [time, setTime] = useState("00:00:00");
+  const [page, setPage] = useState(1);
+  const [tasks, setTasks] = useState([]);
 
   const selectTask = (task) => {
     handleStop(state.stopwatch_state.title, time);
@@ -87,30 +89,21 @@ const App = () => {
 
   const handleStop = (task_name, time) => {
     if (task_name) {
-      for (let i = 0; i < state.tasks.length; i++) {
-        if (state.tasks[i].name === task_name) {
+      for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].name === task_name) {
           const sec = timeToSec(time);
-          state.tasks[i].playtime = secToTime(
-            timeToSec(state.tasks[i].playtime) + sec
-          );
-          if (!state.tasks[i].completed) {
-            const goalSec = timeToSec(state.tasks[i].remaintime);
+          tasks[i].playtime = secToTime(timeToSec(tasks[i].playtime) + sec);
+          if (!tasks[i].completed) {
+            const goalSec = timeToSec(tasks[i].remaintime);
             if (goalSec < sec) {
-              state.tasks[i].completed = true;
-              state.tasks[i].remaintime = "00:00:00";
-              state.tasks[i].achievePer = "100%";
+              tasks[i].completed = true;
+              tasks[i].remaintime = "00:00:00";
+              tasks[i].achievePer = "100%";
             } else {
-              console.log("------");
-              console.log(goalSec - sec);
-              console.log(timeToSec(state.tasks[i].goaltime));
-              console.log(
-                (100.0 * (goalSec - sec)) / timeToSec(state.tasks[i].goaltime) +
-                  "%"
-              );
-              state.tasks[i].remaintime = secToTime(goalSec - sec);
-              state.tasks[i].achievePer =
+              tasks[i].remaintime = secToTime(goalSec - sec);
+              tasks[i].achievePer =
                 100 -
-                (100.0 * (goalSec - sec)) / timeToSec(state.tasks[i].goaltime) +
+                (100.0 * (goalSec - sec)) / timeToSec(tasks[i].goaltime) +
                 "%";
             }
           }
@@ -149,20 +142,27 @@ const App = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <View>
-        <Stopwatch
-          stopwatch_state={state.stopwatch_state}
-          handleStop={handleStop}
-          time={time}
-          setTime={setTime}
-        />
-        <TaskList
-          today_achieved={state.today_achieved}
-          tasks={state.tasks}
-          selectTask={selectTask}
-        />
-      </View>
-      <Menus />
+      {page == 0 ? (
+        <View></View>
+      ) : page == 1 ? (
+        <View>
+          <Stopwatch
+            stopwatch_state={state.stopwatch_state}
+            handleStop={handleStop}
+            time={time}
+            setTime={setTime}
+          />
+          <TaskList
+            today_achieved={state.today_achieved}
+            tasks={tasks}
+            selectTask={selectTask}
+          />
+        </View>
+      ) : (
+        <TaskSetting tasks={tasks} setTasks={setTasks} />
+      )}
+
+      <Menus setPage={setPage} />
     </View>
   );
 };
