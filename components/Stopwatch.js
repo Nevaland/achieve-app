@@ -4,19 +4,19 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 class Stopwatch extends Component {
   render() {
+    const { title, stopwatch_color, playtime } = this.props.stopwatch_state;
+
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{this.props.stopwatch_state.title}</Text>
+        <Text style={styles.title}>{title ? title : "Achiever"}</Text>
         <View style={styles.stopwatch}>
           <View
             style={{
               ...styles.clock,
-              backgroundColor: this.props.stopwatch_state.color,
+              backgroundColor: stopwatch_color,
             }}
           >
-            <Text style={styles.clockText}>
-              {this.props.stopwatch_state.playtime}
-            </Text>
+            <Text style={styles.clockText}>{playtime}</Text>
           </View>
 
           <View>

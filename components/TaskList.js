@@ -8,7 +8,13 @@ class TaskList extends Component {
         <Text style={styles.todayTitle}>Today {this.props.today_achieved}</Text>
         <View>
           {this.props.tasks.map((data, index) => (
-            <TouchableOpacity style={styles.taskContainer} key={index}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.selectTask(data);
+              }}
+              style={styles.taskContainer}
+              key={index}
+            >
               <View
                 style={{ ...styles.taskItem, backgroundColor: data.taskcolor }}
               >
