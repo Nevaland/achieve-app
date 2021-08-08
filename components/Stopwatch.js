@@ -1,49 +1,87 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-class Stopwatch extends Component {
-  render() {
-    const { title, stopwatch_color, playtime } = this.props.stopwatch_state;
+const Stopwatch = ({ stopwatch_state, handleStop }) => {
+  const { title, stopwatch_color, playtime } = stopwatch_state;
+  const [isRunning, setIsRunning] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(playtime);
 
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>{title ? title : "Achiever"}</Text>
-        <View style={styles.stopwatch}>
-          <View
-            style={{
-              ...styles.clock,
-              backgroundColor: stopwatch_color,
-            }}
-          >
-            <Text style={styles.clockText}>{playtime}</Text>
-          </View>
+  const handlePlay = () => {
+    setIsRunning(!isRunning);
+    console.log(elapsedTime);
+  };
 
-          <View>
-            <TouchableOpacity>
-              <View style={styles.startBtn}>
-                <MaterialCommunityIcons
-                  style={styles.btnIcon}
-                  size={30}
-                  name="play"
-                />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.pauseBtn}>
-                <MaterialCommunityIcons
-                  style={styles.btnIcon}
-                  size={30}
-                  name="pause"
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
+  useEffect(() => {
+    let interval;
+    if (isRunning) {
+      interval = setInterval(() => {
+        setElapsedTime((prevTime) => {
+          const secTime =
+            Number(prevTime.substr(0, 2)) * 3600 +
+            Number(prevTime.substr(3, 2)) * 60 +
+            Number(prevTime.substr(6, 2)) +
+            1;
+          var hours = Math.floor(secTime / 3600);
+          var minutes = Math.floor((secTime - hours * 3600) / 60);
+          var seconds = secTime - hours * 3600 - minutes * 60;
+
+          if (hours < 10) {
+            hours = "0" + hours;
+          }
+          if (minutes < 10) {
+            minutes = "0" + minutes;
+          }
+          if (seconds < 10) {
+            seconds = "0" + seconds;
+          }
+          let testTime = hours + ":" + minutes + ":" + seconds;
+          testTime = testTime.substr(0, 8);
+          return testTime;
+          z;
+        });
+      }, 100);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning]);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{title ? title : "Achiever"}</Text>
+      <View style={styles.stopwatch}>
+        <View
+          style={{
+            ...styles.clock,
+            backgroundColor: stopwatch_color,
+          }}
+        >
+          <Text style={styles.clockText}>{elapsedTime}</Text>
+        </View>
+
+        <View>
+          <TouchableOpacity onPress={handlePlay}>
+            <View style={styles.startBtn}>
+              <MaterialCommunityIcons
+                style={styles.btnIcon}
+                size={30}
+                name={isRunning ? "pause" : "play"}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleStop}>
+            <View style={styles.pauseBtn}>
+              <MaterialCommunityIcons
+                style={styles.btnIcon}
+                size={30}
+                name="stop"
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

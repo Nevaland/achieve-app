@@ -71,7 +71,7 @@ export default class App extends Component {
   }
 
   render() {
-    selectTask = (task) => {
+    const selectTask = (task) => {
       this.setState({
         stopwatch_state: {
           title: task.name,
@@ -81,11 +81,18 @@ export default class App extends Component {
       });
     };
 
+    const handleStop = () => {
+      this.setState({});
+    };
+
     return (
       <View style={styles.container}>
         <StatusBar style="auto" />
         <View>
-          <Stopwatch stopwatch_state={this.state.stopwatch_state} />
+          <Stopwatch
+            stopwatch_state={this.state.stopwatch_state}
+            handleStop={handleStop}
+          />
           <TaskList
             today_achieved={this.state.today_achieved}
             tasks={this.state.tasks}
