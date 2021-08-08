@@ -1,10 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Stopwatch from "./components/Stopwatch";
 import TaskList from "./components/TaskList";
 import Menus from "./components/Menus";
 import TaskSetting from "./components/TaskSetting";
+
+import { AsyncStorage } from "react-native";
 
 const App = () => {
   const [state, setState] = useState({
@@ -110,6 +112,7 @@ const App = () => {
         }
       }
     }
+    saveTasks();
   };
 
   const timeToSec = (time) => {
@@ -137,6 +140,21 @@ const App = () => {
     time = time.substr(0, 8);
 
     return time;
+  };
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  const saveTasks = () => {
+    AsyncStorage.setItem("@achiever:tasks", JSON.stringify(tasks));
+  };
+  const loadTasks = () => {
+    AsyncStorage.getItem("@achiever:tasks").then((tasks_data) => {
+      if (tasks_data != null) {
+        setTasks(JSON.parse(tasks_data));
+      }
+    });
   };
 
   return (
