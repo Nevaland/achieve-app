@@ -2,64 +2,13 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 class TaskList extends Component {
-  tasks = [
-    {
-      name: "Project",
-      completed: false,
-      playtime: "00:00:00",
-      goaltime: "01:00:00",
-      taskcolor: "#AEC5FF",
-      achievePer: "0%",
-    },
-    {
-      name: "CS",
-      completed: true,
-      playtime: "01:39:54",
-      goaltime: "00:00:00",
-      taskcolor: "#AAE3F5",
-      achievePer: "100%",
-    },
-    {
-      name: "New Tech",
-      completed: false,
-      playtime: "00:00:00",
-      goaltime: "00:20:00",
-      taskcolor: "#FFF069",
-      achievePer: "0%",
-    },
-    {
-      name: "Blog",
-      completed: false,
-      playtime: "00:00:00",
-      goaltime: "00:20:00",
-      taskcolor: "#D2AEFF",
-      achievePer: "0%",
-    },
-    {
-      name: "Portfolio",
-      completed: false,
-      playtime: "00:00:00",
-      goaltime: "00:20:00",
-      taskcolor: "#FFAEAE",
-      achievePer: "0%",
-    },
-    {
-      name: "Translate",
-      completed: false,
-      playtime: "00:00:00",
-      goaltime: "00:20:00",
-      taskcolor: "#AEFFB6",
-      achievePer: "0%",
-    },
-  ];
-
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.todayTitle}>Today 1/6</Text>
+        <Text style={styles.todayTitle}>Today {this.props.today_achieved}</Text>
         <View>
-          {this.tasks.map((data) => (
-            <TouchableOpacity style={styles.taskContainer} key={data.key}>
+          {this.props.tasks.map((data, index) => (
+            <TouchableOpacity style={styles.taskContainer} key={index}>
               <View
                 style={{ ...styles.taskItem, backgroundColor: data.taskcolor }}
               >
@@ -95,7 +44,6 @@ class TaskList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     marginTop: 20,
     marginRight: 24,
     marginLeft: 24,

@@ -6,10 +6,17 @@ class Stopwatch extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Achiever</Text>
+        <Text style={styles.title}>{this.props.stopwatch_state.title}</Text>
         <View style={styles.stopwatch}>
-          <View style={styles.clock}>
-            <Text style={styles.clockText}>00:00:00</Text>
+          <View
+            style={{
+              ...styles.clock,
+              backgroundColor: this.props.stopwatch_state.color,
+            }}
+          >
+            <Text style={styles.clockText}>
+              {this.props.stopwatch_state.playtime}
+            </Text>
           </View>
 
           <View>
@@ -54,7 +61,6 @@ const styles = StyleSheet.create({
   },
   clock: {
     flex: 1,
-    backgroundColor: "#C4C4C4",
     marginRight: 7,
     alignItems: "center",
     justifyContent: "center",
